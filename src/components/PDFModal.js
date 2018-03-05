@@ -7,7 +7,8 @@ const PDFModal = class PDFModal extends React.Component
   {
     super();
     this.state = {
-      showModal: false
+      showModal: false,
+      isLoading:true
     }
   }
 
@@ -19,6 +20,10 @@ const PDFModal = class PDFModal extends React.Component
   open()
   {
     this.setState({showModal: true});
+  }
+
+  handleLoad() {
+      this.setState({isLoading: false})
   }
 
   render()
@@ -44,8 +49,8 @@ const PDFModal = class PDFModal extends React.Component
             <button className="btn btn-default pull-right" onClick={this.close.bind(this)}>&times;</button>
           </Modal.Header>
           <Modal.Body style={{width: "100%"}}>
-            {/*<span id="spinner-iframe" className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>*/}
-            <iframe id="pdf_iframe" className="block" src={viewer} frameBorder="0" style={{width: "100%", height: window.innerHeight - 200}} title="PDF"></iframe>
+            {this.state.isLoading ? <span id="spinner-iframe" className="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> : null}
+            <iframe id="pdf_iframe" className="block" src={viewer} frameBorder="0" style={{width: "100%", height: window.innerHeight - 200}} title="PDF" onLoad={this.handleLoad.bind(this)}></iframe>
             {/*<div id="status"></div>*/}
           </Modal.Body>
         </Modal>
